@@ -18,26 +18,26 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-    @action(detail=True, methods=['post'])
-    def create(self, request):
-        if request.method == 'POST':
-            serializer = PostSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-            
-    @action(detail=True, methods=['post'])
-    def upvote(request, post_id):
-        if request.method == 'POST':
-            post = Post.objects.get(pk=post_id)
-            post.votes += 1
-            post.save()
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+@action(detail=True, methods=['post'])
+def create(self, request):
+    if request.method == 'POST':
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        
+@action(detail=True, methods=['post'])
+def upvote(request, post_id):
+    if request.method == 'POST':
+        post = Post.objects.get(pk=post_id)
+        post.votes += 1
+        post.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-    @action(detail=True, methods=['post'])
-    def downvote(request, post_id):
-        if request.method == 'POST':
-            post = Post.objects.get(pk=post_id)
-            post.votes -= 1
-            post.save()
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+@action(detail=True, methods=['post'])
+def downvote(request, post_id):
+    if request.method == 'POST':
+        post = Post.objects.get(pk=post_id)
+        post.votes -= 1
+        post.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
