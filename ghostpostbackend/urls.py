@@ -26,7 +26,4 @@ urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('post', view.reverse_action('create', args=['1'])),
-    path('upvote/<int:post_id>', view.reverse_action('upvote', args=['1'])),
-    path('downvote/<int:post_id>', view.reverse_action('downvote', args=['1'])),
 ]
